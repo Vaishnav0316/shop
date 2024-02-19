@@ -1,0 +1,139 @@
+<html>
+<body>
+    <script type="text/javascript">
+        function validation(){
+            var alpha=/^[a-z A-Z]+$/;
+            var num=/^[0-9]+$/;
+            var email=/^[\w\-\.\+]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z0-9]{2,4}$/; 
+
+            var name=document.getElementById('name');
+            var gender=document.myform.gender;
+            var address=document.getElementById('address');
+            var place=document.getElementById('place');
+            var username=document.getElementById('username');
+            var password=document.getElementById('password');
+
+            if(name.value.length == 0)
+            {
+                alert("enter name");
+                return false;
+            }
+           else if(!name.value.match(alpha))
+            {
+                alert("invalid name");
+                name.focus();
+                return false;
+            }
+            else if(gender[0].checked == false && gender[1].checked == false)
+            {
+                alert("enter gender");
+                return false;
+            }
+            else if(address.value.length == 0)
+            {
+                alert("enter address");
+                return false;
+            }
+            else if(place.value.length == 0)
+            {
+                alert("enter place");
+                return false;
+            }
+            else if(username.value.length ==0)
+            {
+                alert("enter username");
+                return false;
+            }
+            else if(!username.value.match(email))
+            {
+                alert("invalid username");
+                username.focus();
+                return false;
+            }
+            else if(password.value.length == 0)
+            {
+                alert("enter password");
+                return false;
+
+            }
+            else{
+                return true;
+            }
+
+        }
+    </script>
+
+
+
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#username").change(function(){
+            var uid=$("#username").val();
+            $.ajax({
+                url:"{% url 'checkuser' %}",
+                data:{'us':uid},
+                success:function(data){
+              
+                    if(data.valid == 'exist')
+                    {
+                        alert("username already exist");
+                        $("#username").val();
+                    }
+                }
+            })
+        })
+    })
+</script>
+<table>
+<form method="post" action="{% url 'registerAction' %}" name="myform">
+{% csrf_token %}
+<tr>
+<th>NAME</th>
+<td><input type="text" name="name" id="name"></td>
+</tr>
+<tr>
+<th>GENDER</th>
+<td><input type="radio" name="gender" id="gender" value="male">Male
+<input type="radio" name="gender" id="gender" value="female">Female</td>
+
+</tr>
+<tr>
+<th>ADDRESS</th>
+<td><textarea cols="10" rows="5" id="address" name="address"></textarea></td>
+</tr>
+<tr>
+<th>PLACE</th>
+<td><select name="place" id="place">
+<option value="">--select--</option>
+<option value="kannur">Kannur</option>
+<option value="kochi">Kochi</option>
+<option value="kollam">Kollam</option>
+<option value="kozhikkod">Kozhikkod</option>
+</select>
+</td>
+</tr>
+<tr>
+<th>USERNAME</th>
+<td><input type="text" id="username" name="username"></td>
+</tr>
+<tr>
+<th>PASSWORD</th>
+<td><input type="text" id="password" name="password"></td>
+</tr>
+<tr>
+<th></th>
+<td><input type="submit" value="Register" onclick="return validation()"></td>
+</tr>
+</form>
+</table>
+
+{% if messages %}
+{% for msg in messages%}
+<script>
+alert('{{msg}}')
+</script>
+{% endfor %}
+{% endif%}
+</body>
+</html>

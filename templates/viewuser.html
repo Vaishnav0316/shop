@@ -1,0 +1,26 @@
+<html>
+<body>
+<table>
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>ADDRESS</th>
+<th>PLACE</th>
+<th>USERNAME</th>
+<th>PASSWORD</th>
+</tr>
+{% for v in vi %}
+<tr>
+<td>{{v.id}}</td>
+<td>{{v.Name}}</td>
+<td>{{v.Adress}}</td>
+<td>{{v.Place}}</td>
+<td>{{v.Username}}</td>
+<td>{{v.Password}}</td>
+<td><a href="{% url 'edit' v.id %}">Edit</a></td>
+<td><a href="{% url 'delete' v.id %}">delete</a></td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>

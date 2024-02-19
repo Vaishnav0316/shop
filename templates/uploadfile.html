@@ -1,0 +1,17 @@
+<html>
+<body>
+<table>
+<form method="post" action="{% url 'uploadAction' %}" enctype="multipart/form-data">
+{% csrf_token %}
+<tr>
+<th>IMAGE</th>
+<td><input type="file" name="image"></td>
+</tr>
+<tr>
+<th></th>
+<td><input type="submit" value="SUMBIT"></td>
+</tr>
+</form>
+</table>
+</body>
+</html>

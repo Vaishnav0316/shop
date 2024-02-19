@@ -1,0 +1,64 @@
+<html>
+<body>
+<form method="post" action="{% url 'editAction' %}">
+{% csrf_token %}
+<table>
+
+
+{% for v in ed %}
+<input type="hidden" name="id" value="{{v.id}}">
+<tr>
+<th>NAME</th>
+<td><input type="text" name="name" value="{{v.Name}}"></td>
+</tr>       
+<tr>
+<th>GENDER</th>
+<td>
+{% if v.Gender == 'male' %}
+<input type="radio" name="gender" checked="true" value="male">Male
+<input type="radio" name="gender"  value="female">Female</td>
+{% else %}
+<input type="radio" name="gender" value="male">Male
+<input type="radio" name="gender" checked="true"  value="female">Female</td>
+{% endif %}
+</tr>
+<tr>
+<th>ADDRESS</th>
+<td><textarea cols="10" rows="5" name="address">{{v.Adress}}</textarea></td>
+</tr>
+<tr>
+<th>PLACE</th>
+<td><select name="place">
+<option value="{{v.Place}}">{{v.Place}}</option>
+<option value="kannur">Kannur</option>
+<option value="kochi">Kochi</option>
+<option value="kollam">Kollam</option>
+<option value="kozhikkod">Kozhikkod</option>
+</select>
+</td>
+</tr>
+<tr>
+<th>USERNAME</th>
+<td><input type="text" name="username" value="{{v.Username}}"></td>
+</tr>
+<tr>
+<th>PASSWORD</th>
+<td><input type="text" name="password" value="{{v.Password}}"></td>
+</tr>
+<tr>
+<th></th>
+<td><input type="submit" value="Update"></td>
+</tr>
+{% endfor %}
+
+</table>
+</form>
+{% if messages %}
+{% for msg in messages%}
+<script>
+alert('{{msg}}')
+</script>
+{% endfor %}
+{% endif%}
+</body>
+</html>

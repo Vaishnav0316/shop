@@ -1,0 +1,41 @@
+<html>
+<body>
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+$(document).ready(function(){
+$("#country").change(function(){
+  var cid=$("#country").val();
+$.ajax({
+	url:"{% url 'getstate' %}",
+	data:{'co':cid},
+	success:function(data){
+	$("#state").html(data)
+
+}
+
+})
+})
+
+})
+</script>
+<table>
+<th>COUNTRY</th>
+<tr>
+<td><select name="place" id="country">
+<option value="">--select--</option>
+{% for v in co %}
+<option value="{{v.id}}">{{v.name}}</option>
+{% endfor %}
+</td>
+</tr>
+<tr>
+<th>State</th>
+<td>
+<select id="state">
+<option value="">--select--</option>
+</select>
+</td>
+</tr>
+</table>
+</body>
+</html>
